@@ -44,7 +44,32 @@ const ProjectWizard = (): JSX.Element => {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-
+            <div>
+              <label htmlFor="name">Name:</label>
+              <Field type="text" id="name" name="name" />
+              <ErrorMessage name="name" component="div" />
+            </div>
+            <div>
+              <label htmlFor="description">Description:</label>
+              <Field as="textarea" id="description" name="description" />
+            </div>
+            <div>
+              <label htmlFor="startDate">Start Date:</label>
+              <Field type="date" id="startDate" name="startDate" />
+              <ErrorMessage name="startDate" component="div" />
+            </div>
+            <div>
+              <label htmlFor="endDate">End Date:</label>
+              <Field type="date" id="endDate" name="endDate" />
+              <ErrorMessage name="endDate" component="div" />
+            </div>
+            <div>
+              <label htmlFor="areaOfInterest">Area of Interest:</label>
+              <Field type="file" id="areaOfInterest" name="areaOfInterest" accept=".json" />
+            </div>
+            <button type="submit" disabled={isSubmitting}>
+              Create Project
+            </button>
           </Form>
         )}
       </Formik>
