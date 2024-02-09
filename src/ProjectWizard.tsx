@@ -1,6 +1,9 @@
-import React from 'react';
+// src/ProjectWizard.tsx
+
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
+import Map from './Map';
 
 interface ProjectFormValues {
   name: string;
@@ -10,7 +13,9 @@ interface ProjectFormValues {
   areaOfInterest: File | null;
 }
 
-const ProjectWizard = (): JSX.Element => {
+const ProjectWizard: React.FC = () => {
+  const [geoJson, setGeoJson] = useState<string>('');
+
   const initialValues: ProjectFormValues = {
     name: '',
     description: '',
@@ -33,6 +38,15 @@ const ProjectWizard = (): JSX.Element => {
       const response = await axios.post('http://example.com/createProject', formData);
 
       console.log('Project created:', response.data);
+      if (values.areaOfInterest) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target && event.target.result) {
+            setGeoJson(event.target.result as string);
+          }
+        };
+        reader.readAsText(values.areaOfInterest);
+      }
     } catch (error) {
       console.error('Failed to create project:', error);
     }
@@ -67,6 +81,7 @@ const ProjectWizard = (): JSX.Element => {
               <label htmlFor="areaOfInterest">Area of Interest:</label>
               <Field type="file" id="areaOfInterest" name="areaOfInterest" accept=".json" />
             </div>
+            <Map geoJson={geoJson} />
             <button type="submit" disabled={isSubmitting}>
               Create Project
             </button>
