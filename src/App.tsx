@@ -3,10 +3,7 @@ import React from 'react';
 
 function App() {
   return (
-    <div className="App">
-      <header>
-        Map View
-      </header>
+    <div className="App bg-slate-500 h-screen">
       <ProjectWizard />
     </div>
   );
