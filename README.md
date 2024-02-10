@@ -12,3 +12,9 @@
 
 
 ![image](https://github.com/Flicksie/map-wizard/assets/12115973/aa9eb66c-f086-43fb-8e29-14c8c035fd98)
+
+
+## Notes
+
+- Setting the Project name to "invalid" will trigger an error, just for demo purposes
+
