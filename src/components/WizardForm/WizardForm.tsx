@@ -7,6 +7,7 @@ import Swal from "components/Base/Swal";
 import Button from "components/Base/Button";
 import FileInput from "components/Base/FileInput";
 import FieldLabel from "components/Base/FieldLabel";
+import classnames from "classnames";
 
 interface ProjectFormValues {
     name: string;
@@ -62,9 +63,13 @@ const WizardForm = ({ onSuccess, onFail }): JSX.Element => {
     });
 
     const fieldErrorClasses = "text-red-500 text-xs italic";
+    const fieldStyle = (error:boolean) => classnames(
+        "border-2 border-slate-300 rounded-md p-2 w-full",
+        {"border-red-500": error}
+        );
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ isSubmitting, isValid, setFieldValue }) => (
+            {({ isSubmitting, isValid, errors, touched, setFieldValue }) => (
 
                 <Form style={{
                     display: "flex",
@@ -75,28 +80,28 @@ const WizardForm = ({ onSuccess, onFail }): JSX.Element => {
                     margin: "auto",
 
                 }}>
-                    {isValid ? null : <div>Form is invalid</div>}
+                    {isValid ? null : <div className={fieldErrorClasses}>Please address all issues with the submission</div>}
                     <div>
                         <FieldLabel label="Project Name" required />
-                        <Field type="text" id="name" name="name" className="border-2 border-slate-300 rounded-md p-2 w-full" placeholder="My flamboyantly new project" />
+                        <Field type="text" id="name" name="name" className={fieldStyle(errors.name && touched.name)} placeholder="My flamboyantly new project" />
                         <ErrorMessage className={fieldErrorClasses} name="name" component="div" />
                     </div>
                     <div>
                         <FieldLabel label="Description" />
-                        <Field as="textarea" id="description" name="description" className="border-2 border-slate-300 rounded-md p-2 w-full" placeholder="Description (optional)..." />
+                        <Field as="textarea" id="description" name="description" className={fieldStyle(errors.description && touched.description)} placeholder="Description (optional)..." />
                     </div>
                     <div className="flex justify-between">
                         <div className="w-1/2 mr-4">
                             <FieldLabel label="Start Date" required />
                             <div className=" w-full">
-                                <Field type="date" id="startDate" name="startDate" className="border-2 border-slate-300 rounded-md p-2 w-full" />
+                                <Field type="date" id="startDate" name="startDate" className={fieldStyle(errors.startDate && touched.startDate)} />
                                 <ErrorMessage className={fieldErrorClasses} name="startDate" component="div" />
                             </div>
                         </div>
                         <div className="w-1/2">
                             <FieldLabel label="End Date" required />
                             <div>
-                                <Field type="date" id="endDate" name="endDate" className="border-2 border-slate-300 rounded-md p-2 w-full" />
+                                <Field type="date" id="endDate" name="endDate" className={fieldStyle(errors.endDate && touched.endDate)} />
                                 <ErrorMessage className={fieldErrorClasses} name="endDate" component="div" />
                             </div>
                         </div>
