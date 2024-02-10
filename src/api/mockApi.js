@@ -1,14 +1,21 @@
 import isValidGeoJson from "./validators/isValidGeoJSON";
 
-const FAKE_DELAY = 3e3;
+const FAKE_DELAY = 0.0003e3;
 
 // Simulate somnething like POST /api/projects
 const createProject = async (formData) => {
     await new Promise(resolve => setTimeout(resolve, FAKE_DELAY));
 
+    // Simulate some miscellaneous error
     if (formData.get("name") === "invalid") {
       return Promise.reject({ success: false, message: "Invalid project name" });
     }
+    // Simulate some server error
+    if (formData.get("name") === "error") {
+      throw new Error("Server error");
+    }
+
+
     const areaOfInterest = formData.get("areaOfInterest");
 
     if (areaOfInterest) {

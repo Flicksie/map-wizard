@@ -9,6 +9,11 @@ import FileInput from "components/Base/FileInput";
 import FieldLabel from "components/Base/FieldLabel";
 import classnames from "classnames";
 
+interface WizardFormProps {
+    onSuccess?: (project) => void;
+    onFail?: (error) => void;
+}
+
 interface ProjectFormValues {
     name: string;
     description: string;
@@ -18,7 +23,7 @@ interface ProjectFormValues {
     file: File | null;
 }
 
-const WizardForm = ({ onSuccess, onFail }): JSX.Element => {
+const WizardForm = ({ onSuccess, onFail }:WizardFormProps): JSX.Element => {
     const initialValues: ProjectFormValues = {
         name: "",
         description: "",
