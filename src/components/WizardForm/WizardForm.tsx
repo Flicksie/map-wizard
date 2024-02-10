@@ -77,15 +77,17 @@ const WizardForm = ({ onSuccess, onFail }): JSX.Element => {
                 }}>
                     {isValid ? null : <div>Form is invalid</div>}
                     <div>
-                        <Field type="text" id="name" name="name" className="border-2 border-slate-300 rounded-md p-2 w-full" placeholder="Name" />
+                        <FieldLabel label="Project Name" required />
+                        <Field type="text" id="name" name="name" className="border-2 border-slate-300 rounded-md p-2 w-full" placeholder="My flamboyantly new project" />
                         <ErrorMessage className={fieldErrorClasses} name="name" component="div" />
                     </div>
                     <div>
-                        <Field as="textarea" id="description" name="description" className="border-2 border-slate-300 rounded-md p-2 w-full" placeholder="Description..." />
+                        <FieldLabel label="Description" />
+                        <Field as="textarea" id="description" name="description" className="border-2 border-slate-300 rounded-md p-2 w-full" placeholder="Description (optional)..." />
                     </div>
                     <div className="flex justify-between">
                         <div className='w-1/2 mr-4'>
-                            <label className="text-xs font-bold uppercase" htmlFor="startDate">Start Date</label>
+                            <FieldLabel label="Start Date" required />
                             <div className=' w-full'>
                                 <Field type="date" id="startDate" name="startDate" className="border-2 border-slate-300 rounded-md p-2 w-full" />
                                 <ErrorMessage className={fieldErrorClasses} name="startDate" component="div" />
