@@ -1,6 +1,6 @@
 import isValidGeoJson from "./validators/isValidGeoJSON";
 
-const FAKE_DELAY = 0.0003e3;
+const FAKE_DELAY = 3e3;
 
 // Simulate somnething like POST /api/projects
 const createProject = async (formData) => {
