@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TileLayer, GeoJSON, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { MapContainer } from 'react-leaflet';
+import { TileLayer, GeoJSON, useMap, FeatureGroup, Popup, MapContainer } from 'react-leaflet';
 import L, { LatLngExpression } from 'leaflet';
 
+import 'leaflet/dist/leaflet.css';
+
 interface MapProps {
-  geoJson: string;
+  geoJson: GeoJSON.Feature;
 }
 
 const DEFAULT_POSITION: LatLngExpression = [51.11037329711444, 17.032561807844445];
@@ -24,7 +24,7 @@ const Map = ({ geoJson }: MapProps): JSX.Element => {
 
   useEffect(() => {
     if (geoJson) {
-      const parsedGeoJson = JSON.parse(geoJson);
+      const parsedGeoJson = geoJson;
       if (mapRef.current) {
         const map = mapRef.current;
         map.flyToBounds(L.geoJSON(parsedGeoJson).getBounds());
@@ -32,7 +32,6 @@ const Map = ({ geoJson }: MapProps): JSX.Element => {
     }
   }, [geoJson]);
 
-  //console.log('GeoJSON:', geoJson);
 
 
   return (
@@ -42,13 +41,20 @@ const Map = ({ geoJson }: MapProps): JSX.Element => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <ChangeView center={position} zoom={10} />
-      {geoJson && <GeoJSON data={JSON.parse(geoJson)} />}
-
+      <ChangeView center={position} zoom={12} />
+      {geoJson && (
+        <FeatureGroup pathOptions={{ color: 'red' }}>
+          <GeoJSON data={geoJson} />
+          {geoJson.properties?.description &&
+            <Popup position={position}>
+              <p className="text-xs">{(geoJson).properties.description}</p>
+            </Popup>
+          }
+        </FeatureGroup>
+      )}
     </MapContainer>
   )
 };
 
-//   <GeoJSON key={keyFunction(this.props.map.data.json)} data={this.props.map.data.json} />
 export default Map;
 
