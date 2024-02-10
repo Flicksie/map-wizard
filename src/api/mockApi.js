@@ -1,13 +1,46 @@
-const createProject = async (projectData) => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+import isValidGeoJson from './validators/isValidGeoJSON';
 
-    // vld fail
-    if (projectData.name === 'invalid') {
-      throw new Error('Validation failed: Project name must not be "invalid"');
+const createProject = async (formData) => {
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    if (formData.get("name") === 'invalid') {
+      return Promise.reject({ success: false, message: 'Invalid project name' });
     }
 
-    // crt
-    return { success: true, projectId: Math.floor(Math.random() * 1000) };
+    const newProjectData = {
+      projectId: ~~(Math.random() * 1000),
+      name: formData.get("name"),
+      description: formData.get("description"),
+      startDate: formData.get("startDate"),
+      endDate: formData.get("endDate"),
+    };
+
+    const areaOfInterest = formData.get("areaOfInterest");
+
+    if (areaOfInterest) {
+      const parsedText = await readTextFile(areaOfInterest);
+
+      if (!isValidGeoJson(parsedText)) {
+        return Promise.reject({ success: false, message: 'Invalid GeoJSON' });
+      }
+
+      newProjectData.areaOfInterest = parsedText;
+      console.log('newProjectData', 123);
+
+      return Promise.resolve({ success: true, data: newProjectData});
+    }
+
+
   };
+
+
+  function readTextFile (file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  }
 
   export { createProject };
