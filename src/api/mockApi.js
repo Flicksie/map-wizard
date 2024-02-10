@@ -1,7 +1,7 @@
 import isValidGeoJson from './validators/isValidGeoJSON';
 
 const createProject = async (formData) => {
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise(resolve => setTimeout(resolve, 5e3));
 
     if (formData.get("name") === 'invalid') {
       return Promise.reject({ success: false, message: 'Invalid project name' });
@@ -24,7 +24,7 @@ const createProject = async (formData) => {
         return Promise.reject({ success: false, message: 'Invalid GeoJSON' });
       }
 
-      newProjectData.areaOfInterest = parsedText;
+      newProjectData.areaOfInterest = JSON.parse(parsedText);
       console.log('newProjectData', 123);
 
       return Promise.resolve({ success: true, data: newProjectData});
