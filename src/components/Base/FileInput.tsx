@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import classnames from "classnames";
-import Button, { buttonBaseStyle, buttonColorSchemes } from "./Button";
+import Button from "./Button";
 import { Field, ErrorMessage } from "formik";
 
 interface FileInputProps {
@@ -11,7 +10,7 @@ interface FileInputProps {
 }
 
 const FileInput = ({ name, label, accept, onChange }: FileInputProps): JSX.Element => {
-    const [fileName, setFileName] = useState<string>('');
+    const [fileName, setFileName] = useState<string>("");
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (onChange) onChange(event);

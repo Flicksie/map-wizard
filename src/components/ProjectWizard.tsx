@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Map } from 'components/Map';
-import { WizardForm } from 'components/WizardForm';
-import GeoJSON from 'geojson';
+import React, { useState } from "react";
+import { Map } from "components/Map";
+import { WizardForm } from "components/WizardForm";
+import GeoJSON from "geojson";
 
 const ProjectWizard = (): JSX.Element => {
   const [geoJson, setGeoJson] = useState<GeoJSON.Feature>();
@@ -10,7 +10,7 @@ const ProjectWizard = (): JSX.Element => {
     setGeoJson(data.areaOfInterest);
   }
   const handleError = (error) => {
-    console.log('Error:', error);
+    console.log("Error:", error);
   }
 
   return (

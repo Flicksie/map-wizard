@@ -34,7 +34,7 @@ const Button = ({ icon, label, appearance = "primary", isLoading, disabled, ...p
     return (
         <button {...props} className={style} >
             <div style={{
-                transition: 'all 0.3s ease-in-out',
+                transition: "all 0.3s ease-in-out",
                 minWidth: isLoading ? 30 : (label.length * 8 + (icon ? 20 : 0)),
                 width: 0,
                 whiteSpace: "nowrap",

@@ -1,31 +1,33 @@
-import isValidGeoJson from './validators/isValidGeoJSON';
+import isValidGeoJson from "./validators/isValidGeoJSON";
 
+const FAKE_DELAY = 3e3;
+
+// Simulate somnething like POST /api/projects
 const createProject = async (formData) => {
-    await new Promise(resolve => setTimeout(resolve, 5e3));
+    await new Promise(resolve => setTimeout(resolve, FAKE_DELAY));
 
-    if (formData.get("name") === 'invalid') {
-      return Promise.reject({ success: false, message: 'Invalid project name' });
+    if (formData.get("name") === "invalid") {
+      return Promise.reject({ success: false, message: "Invalid project name" });
     }
-
-    const newProjectData = {
-      projectId: ~~(Math.random() * 1000),
-      name: formData.get("name"),
-      description: formData.get("description"),
-      startDate: formData.get("startDate"),
-      endDate: formData.get("endDate"),
-    };
-
     const areaOfInterest = formData.get("areaOfInterest");
 
     if (areaOfInterest) {
       const parsedText = await readTextFile(areaOfInterest);
 
       if (!isValidGeoJson(parsedText)) {
-        return Promise.reject({ success: false, message: 'Invalid GeoJSON' });
-      }
+        return Promise.reject({ success: false, message: "Invalid GeoJSON" });
+      };
+
+      const newProjectData = {
+        projectId: ~~(Math.random() * 1000),
+        name: formData.get("name"),
+        description: formData.get("description"),
+        startDate: formData.get("startDate"),
+        endDate: formData.get("endDate"),
+      };
 
       newProjectData.areaOfInterest = JSON.parse(parsedText);
-      console.log('newProjectData', 123);
+      console.log("newProjectData", 123);
 
       return Promise.resolve({ success: true, data: newProjectData});
     }
