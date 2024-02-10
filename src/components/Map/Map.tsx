@@ -25,11 +25,9 @@ const Map = ({ geoJson }: MapProps): JSX.Element => {
 
   return (
     <MapContainer ref={mapRef} center={DEFAULT_POSITION} zoom={13} scrollWheelZoom={false} style={{ height: "100%", minHeight: "100%" }}>
-
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
+      <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png" />
       {geoJson && (
-        <FeatureGroup pathOptions={{ color: "red" }}>
+        <FeatureGroup pathOptions={{ color: "#6b6bAB" }}>
           <GeoJSON data={geoJson} />
           {geoJson.properties?.description &&
             <Popup>
