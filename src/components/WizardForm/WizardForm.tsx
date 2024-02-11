@@ -41,6 +41,9 @@ const WizardForm = ({ onSuccess, onFail }:WizardFormProps): JSX.Element => {
         formData.append("endDate", values.endDate);
         formData.append("areaOfInterest", values.file as File);
 
+        // here's where an axios.post() or fetch() would go
+        // or a mutation call in a GraphQL client
+        // possibly needing some extra awaits for reading the JSON response and handling errors
         createProject(formData).then((response) => {
             Swal.fire({
                 icon: "success",
@@ -72,9 +75,10 @@ const WizardForm = ({ onSuccess, onFail }:WizardFormProps): JSX.Element => {
         "border-2 border-slate-300 rounded-md p-2 w-full",
         {"border-red-500": error}
         );
+
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ isSubmitting, isValid, errors, touched, setFieldValue }) => (
+            {({ isSubmitting, errors, touched, setFieldValue }) => (
 
                 <Form style={{
                     display: "flex",
@@ -85,16 +89,17 @@ const WizardForm = ({ onSuccess, onFail }:WizardFormProps): JSX.Element => {
                     margin: "auto",
 
                 }}>
-                    {isValid ? null : <div className={fieldErrorClasses}>Please address all issues with the submission</div>}
                     <div>
                         <FieldLabel label="Project Name" required />
                         <Field type="text" id="name" name="name" className={fieldStyle(errors.name && touched.name)} placeholder="My flamboyantly new project" />
                         <ErrorMessage className={fieldErrorClasses} name="name" component="div" />
                     </div>
+
                     <div>
                         <FieldLabel label="Description" />
                         <Field as="textarea" id="description" name="description" className={fieldStyle(errors.description && touched.description)} placeholder="Description (optional)..." />
                     </div>
+
                     <div className="flex justify-between">
                         <div className="w-1/2 mr-4">
                             <FieldLabel label="Start Date" required />
@@ -112,15 +117,16 @@ const WizardForm = ({ onSuccess, onFail }:WizardFormProps): JSX.Element => {
                         </div>
                     </div>
 
-
                     <div>
                         <FieldLabel label="Area of Interest" required />
-                        <FileInput name="areaOfInterest" label="Upload file..." accept=".json" onChange={(e) => {
+                        <FileInput name="areaOfInterest" label="Upload file..." accept="application/json" onChange={(e) => {
                             setFieldValue("file", e.currentTarget.files[0]);
                         }} />
                         <ErrorMessage className={fieldErrorClasses} name="file" component="div" />
                     </div>
-                        <hr />
+
+                    <hr />
+
                     <div className="flex items-end justify-end w-full">
                         <Button
                             label={"Create Project"}
