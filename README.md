@@ -9,10 +9,15 @@ Components created from scratch on demand. Using only Tailwind;
 Nothing too fancy on the mocked backend calls. I considered writing a fake HTTP wrapper for axios but that would be beyond the scope of this test. A fake call as a function will yield similar results since it is async anyway;
 
 
+### Features
+- It's pretty
+- It's shiny
+- Animations ✨
+- It's sugar-free
+- It works™
+
 
 ## Installation
-
-### Requirements
     
     npm install
 
